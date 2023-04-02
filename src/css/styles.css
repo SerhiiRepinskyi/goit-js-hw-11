@@ -1,3 +1,16 @@
+.is-hidden {
+  /* display: none; */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+
 .search-form {
   display: flex;
   justify-content: center;
@@ -17,7 +30,7 @@
   padding: 10px;
   font-size: 16px;
   font-weight: bold;
-  background-color: #4caf50;
+  background-color: #0056b3;
   color: #fff;
   border: none;
   border-radius: 0 5px 5px 0;
@@ -26,30 +39,78 @@
 
 .load-more {
   display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
+  margin: 0 auto 60px;
+  padding: 10px 30px;
   font-size: 16px;
   font-weight: bold;
   color: #fff;
-  background-color: #4caf50;
+  background-color: #0056b3;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-form button[type='submit']:hover,
 .search-form button[type='submit']:focus {
-  background-color: #0056b3;
+  background-color: #4caf50;
 }
 
 button:hover,
 button:focus {
-  background-color: #0056b3;
+  background-color: #4caf50;
 }
+
+/* ========================== */
+
+.gallery {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 50px;
+    display: flex;
+}
+
+a {
+    display: block;
+
+    flex-basis: calc(100% / 4 - 20px);
+    justify-content: center;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.img-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    height: 250px;
+    border-radius: 5px 5px 0 0;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    background-color: #3d5f84;
+    border-radius: 0 0 5px 5px;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    line-height: 1.4;
+    font-size: 0.7em;
+}
+
 
