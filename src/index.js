@@ -3,7 +3,6 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів SimpleLightbox
 import 'simplelightbox/dist/simple-lightbox.min.css';
-
 import PixabayApiService from './js/pixabay-api';
 
 const refs = {
@@ -24,34 +23,33 @@ const simpleLightbox = new SimpleLightbox('.gallery a', {
 refs.searchForm.addEventListener('submit', handleSearch);
 refs.loadMoreBtn.addEventListener('click', handleLoadMore);
 
-function handleSearch(e) {
+async function handleSearch(e) {
   e.preventDefault();
-  pixabayApiService.query = e.currentTarget.elements.searchQuery.value; // Виклик сеттера PixabayApiService
+  pixabayApiService.query = e.currentTarget.elements.searchQuery.value.trim(); // Виклик сеттера PixabayApiService
   if (pixabayApiService.query === '') {
     return Notiflix.Notify.warning('Enter text to search the gallery.');
   }
 
   refs.loadMoreBtn.classList.remove('is-hidden');
   pixabayApiService.resetPage();
-  pixabayApiService.fetchImages().then(data => {
-    if (data.hits.length === 0) {
-      Notiflix.Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-    } else {
-      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
-    }
 
+  try {
+    const hits = await pixabayApiService.fetchImages();
     clearGalleryContainer();
-    appendImagesMarkup(data.hits);
-  });
+    appendImagesMarkup(hits);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function handleLoadMore() {
-  pixabayApiService.fetchImages().then(data => {
-    appendImagesMarkup(data.hits);
+async function handleLoadMore() {
+  try {
+    const hits = await pixabayApiService.fetchImages();
+    appendImagesMarkup(hits);
     smoothScroll();
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function appendImagesMarkup(hits) {
@@ -92,7 +90,7 @@ function appendImagesMarkup(hits) {
 
   simpleLightbox.refresh();
 
-  if (hits.length < 40) {
+  if (hits.length < pixabayApiService.per_page) {
     refs.loadMoreBtn.classList.add('is-hidden');
     Notiflix.Notify.info(
       "We're sorry, but you've reached the end of search results."
