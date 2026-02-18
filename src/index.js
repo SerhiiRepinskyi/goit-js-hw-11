@@ -12,6 +12,16 @@ const refs = {
 };
 refs.loadMoreBtn.classList.add('is-hidden');
 
+function setLoadingState(isLoading) {
+  refs.loadMoreBtn.disabled = isLoading;
+
+  if (isLoading) {
+    refs.loadMoreBtn.textContent = 'Loading...';
+  } else {
+    refs.loadMoreBtn.textContent = 'Load more';
+  }
+}
+
 const pixabayApiService = new PixabayApiService();
 
 const simpleLightbox = new SimpleLightbox('.gallery a', {
@@ -37,6 +47,8 @@ async function handleSearch(e) {
   clearGalleryContainer();
 
   try {
+    setLoadingState(true);
+
     const { hits, totalHits } = await pixabayApiService.fetchImages();
 
     if (totalHits === 0) {
@@ -53,10 +65,14 @@ async function handleSearch(e) {
   } catch (error) {
     console.error(error);
     Notiflix.Notify.failure('Something went wrong. Please try again.');
+  } finally {
+    setLoadingState(false);
   }
 }
 
 async function handleLoadMore() {
+  setLoadingState(true);
+
   try {
     const { hits, totalHits } = await pixabayApiService.fetchImages();
 
@@ -66,6 +82,8 @@ async function handleLoadMore() {
   } catch (error) {
     console.error(error);
     Notiflix.Notify.failure('Something went wrong. Please try again.');
+  } finally {
+    setLoadingState(false);
   }
 }
 
