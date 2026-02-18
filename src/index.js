@@ -49,8 +49,7 @@ async function handleSearch(e) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
 
     appendImagesMarkup(hits);
-
-    refs.loadMoreBtn.classList.remove('is-hidden');
+    checkEndOfResults(totalHits);
   } catch (error) {
     console.error(error);
     Notiflix.Notify.failure('Something went wrong. Please try again.');
@@ -59,13 +58,28 @@ async function handleSearch(e) {
 
 async function handleLoadMore() {
   try {
-    const { hits } = await pixabayApiService.fetchImages();
+    const { hits, totalHits } = await pixabayApiService.fetchImages();
 
     appendImagesMarkup(hits);
     smoothScroll();
+    checkEndOfResults(totalHits);
   } catch (error) {
     console.error(error);
     Notiflix.Notify.failure('Something went wrong. Please try again.');
+  }
+}
+
+function checkEndOfResults(totalHits) {
+  const currentPage = pixabayApiService.page - 1;
+  const perPage = pixabayApiService.perPage;
+
+  if (currentPage * perPage >= totalHits) {
+    refs.loadMoreBtn.classList.add('is-hidden');
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
+  } else {
+    refs.loadMoreBtn.classList.remove('is-hidden');
   }
 }
 
@@ -106,13 +120,6 @@ function appendImagesMarkup(hits) {
   refs.divGallery.insertAdjacentHTML('beforeend', imagesMarkup);
 
   simpleLightbox.refresh();
-
-  if (hits.length < pixabayApiService.per_page) {
-    refs.loadMoreBtn.classList.add('is-hidden');
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
-  }
 }
 
 function clearGalleryContainer() {
@@ -120,9 +127,10 @@ function clearGalleryContainer() {
 }
 
 function smoothScroll() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+  const firstCard = refs.divGallery.firstElementChild;
+  if (!firstCard) return;
+
+  const { height: cardHeight } = firstCard.getBoundingClientRect();
 
   window.scrollBy({
     top: cardHeight * 2,
