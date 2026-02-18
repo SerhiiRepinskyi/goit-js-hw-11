@@ -25,30 +25,47 @@ refs.loadMoreBtn.addEventListener('click', handleLoadMore);
 
 async function handleSearch(e) {
   e.preventDefault();
-  pixabayApiService.query = e.currentTarget.elements.searchQuery.value.trim(); // Виклик сеттера PixabayApiService
-  if (pixabayApiService.query === '') {
+
+  const query = e.currentTarget.elements.searchQuery.value.trim();
+  pixabayApiService.query = query;
+
+  if (!query) {
     return Notiflix.Notify.warning('Enter text to search the gallery.');
   }
 
-  refs.loadMoreBtn.classList.remove('is-hidden');
   pixabayApiService.resetPage();
+  clearGalleryContainer();
 
   try {
-    const hits = await pixabayApiService.fetchImages();
-    clearGalleryContainer();
+    const { hits, totalHits } = await pixabayApiService.fetchImages();
+
+    if (totalHits === 0) {
+      refs.loadMoreBtn.classList.add('is-hidden');
+      return Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+    }
+
+    Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+
     appendImagesMarkup(hits);
+
+    refs.loadMoreBtn.classList.remove('is-hidden');
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    Notiflix.Notify.failure('Something went wrong. Please try again.');
   }
 }
 
 async function handleLoadMore() {
   try {
-    const hits = await pixabayApiService.fetchImages();
+    const { hits } = await pixabayApiService.fetchImages();
+
     appendImagesMarkup(hits);
     smoothScroll();
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    Notiflix.Notify.failure('Something went wrong. Please try again.');
   }
 }
 
