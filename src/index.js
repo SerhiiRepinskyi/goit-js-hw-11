@@ -5,11 +5,8 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayApiService from './js/pixabay-api';
 
-const refs = {
-  searchForm: document.querySelector('#search-form'),
-  divGallery: document.querySelector('.gallery'),
-  loadMoreBtn: document.querySelector('.load-more'),
-};
+import refs from './js/refs';
+
 refs.loadMoreBtn.classList.add('is-hidden');
 
 function setLoadingState(isLoading) {
