@@ -1,35 +1,29 @@
+// ================= IMPORTS =================
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
-// Додатковий імпорт стилів SimpleLightbox
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import PixabayApiService from './js/pixabay-api';
 
+import PixabayApiService from './js/pixabay-api';
 import refs from './js/refs';
 
-refs.loadMoreBtn.classList.add('is-hidden');
-
-function setLoadingState(isLoading) {
-  refs.loadMoreBtn.disabled = isLoading;
-
-  if (isLoading) {
-    refs.loadMoreBtn.textContent = 'Loading...';
-  } else {
-    refs.loadMoreBtn.textContent = 'Load more';
-  }
-}
-
+// ================= INIT =================
 const pixabayApiService = new PixabayApiService();
 
 const simpleLightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
-  // captionPosition:	"bottom", // Default
   captionDelay: 250,
 });
 
-refs.searchForm.addEventListener('submit', handleSearch);
-refs.loadMoreBtn.addEventListener('click', handleLoadMore);
+init();
 
+function init() {
+  refs.loadMoreBtn.classList.add('is-hidden');
+  refs.searchForm.addEventListener('submit', handleSearch);
+  refs.loadMoreBtn.addEventListener('click', handleLoadMore);
+}
+
+// ================= EVENT HANDLERS =================
 async function handleSearch(e) {
   e.preventDefault();
 
@@ -84,6 +78,12 @@ async function handleLoadMore() {
   }
 }
 
+// ================= UI HELPERS =================
+function setLoadingState(isLoading) {
+  refs.loadMoreBtn.disabled = isLoading;
+  refs.loadMoreBtn.textContent = isLoading ? 'Loading...' : 'Load more';
+}
+
 function checkEndOfResults(totalHits) {
   const currentPage = pixabayApiService.page - 1;
   const perPage = pixabayApiService.perPage;
@@ -98,6 +98,7 @@ function checkEndOfResults(totalHits) {
   }
 }
 
+// ================= RENDER =================
 function appendImagesMarkup(hits) {
   const imagesMarkup = hits
     .map(
@@ -109,34 +110,32 @@ function appendImagesMarkup(hits) {
         views,
         comments,
         downloads,
-      }) =>
-        `<a class="gallery-item" href="${largeImageURL}">
-        <div class="photo-card">
-          <img class="img-item" src="${webformatURL}" alt="${tags}" loading="lazy" />
-          <div class="info">
-            <p class="info-item">
-              <b>Likes</b>${likes}
-            </p>
-            <p class="info-item">
-              <b>Views</b>${views}
-            </p>
-            <p class="info-item">
-              <b>Comments</b>${comments}
-            </p>
-            <p class="info-item">
-              <b>Downloads</b>${downloads}
-            </p>
+      }) => `
+        <a class="gallery-item" href="${largeImageURL}">
+          <div class="photo-card">
+            <img
+              class="img-item"
+              src="${webformatURL}"
+              alt="${tags}"
+              loading="lazy"
+            />
+            <div class="info">
+              <p class="info-item"><b>Likes</b>${likes}</p>
+              <p class="info-item"><b>Views</b>${views}</p>
+              <p class="info-item"><b>Comments</b>${comments}</p>
+              <p class="info-item"><b>Downloads</b>${downloads}</p>
+            </div>
           </div>
-        </div>
-      </a>`
+        </a>
+      `
     )
     .join('');
 
   refs.divGallery.insertAdjacentHTML('beforeend', imagesMarkup);
-
   simpleLightbox.refresh();
 }
 
+// ================= UTILS =================
 function clearGalleryContainer() {
   refs.divGallery.innerHTML = '';
 }
