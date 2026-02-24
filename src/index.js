@@ -1,11 +1,19 @@
 // ================= IMPORTS =================
 import './css/styles.css';
-import Notiflix from 'notiflix';
+
+import refs from './js/refs';
+
+import {
+  notifySuccess,
+  notifyError,
+  notifyInfo,
+  notifyWarning,
+} from './js/notify';
+
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import PixabayApiService from './js/pixabay-api';
-import refs from './js/refs';
 
 // ================= INIT =================
 const pixabayApiService = new PixabayApiService();
@@ -31,7 +39,7 @@ async function handleSearch(e) {
   pixabayApiService.query = query;
 
   if (!query) {
-    return Notiflix.Notify.warning('Enter text to search the gallery.');
+    return notifyWarning('Enter text to search the gallery.');
   }
 
   pixabayApiService.resetPage();
@@ -44,18 +52,18 @@ async function handleSearch(e) {
 
     if (totalHits === 0) {
       refs.loadMoreBtn.classList.add('is-hidden');
-      return Notiflix.Notify.failure(
+      return notifyError(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     }
 
-    Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+    notifySuccess(`Hooray! We found ${totalHits} images.`);
 
     appendImagesMarkup(hits);
     checkEndOfResults(totalHits);
   } catch (error) {
     console.error(error);
-    Notiflix.Notify.failure('Something went wrong. Please try again.');
+    notifyError('Something went wrong. Please try again.');
   } finally {
     setLoadingState(false);
   }
@@ -72,7 +80,7 @@ async function handleLoadMore() {
     checkEndOfResults(totalHits);
   } catch (error) {
     console.error(error);
-    Notiflix.Notify.failure('Something went wrong. Please try again.');
+    notifyError('Something went wrong. Please try again.');
   } finally {
     setLoadingState(false);
   }
@@ -90,9 +98,7 @@ function checkEndOfResults(totalHits) {
 
   if (currentPage * perPage >= totalHits) {
     refs.loadMoreBtn.classList.add('is-hidden');
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
+    notifyInfo("We're sorry, but you've reached the end of search results.");
   } else {
     refs.loadMoreBtn.classList.remove('is-hidden');
   }
