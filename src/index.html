@@ -1,10 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homework 11</title>
+
+    <meta
+      name="description"
+      content="Image search application using Pixabay API with pagination and interactive gallery view."
+    />
+
+    <title>Pixabay Image Search</title>
   </head>
   <body>
     <form class="search-form" id="search-form">
@@ -13,6 +19,7 @@
         name="searchQuery"
         autocomplete="off"
         placeholder="Search images..."
+        aria-label="Search images"
       />
       <button type="submit">Search</button>
     </form>
@@ -21,7 +28,7 @@
       <!-- Картки зображень -->
     </div>
 
-    <button type="button" class="load-more">Load more</button>
+    <button type="button" class="load-more" disabled>Load more</button>
 
     <script src="index.js" type="module"></script>
   </body>
