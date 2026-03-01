@@ -60,7 +60,7 @@ async function handleSearch(e) {
     notifySuccess(`Hooray! We found ${totalHits} images.`);
 
     appendImagesMarkup(hits);
-    checkEndOfResults(totalHits);
+    checkEndOfResults(totalHits, hits.length);
   } catch (error) {
     console.error(error);
     notifyError('Something went wrong. Please try again.');
@@ -77,7 +77,7 @@ async function handleLoadMore() {
 
     appendImagesMarkup(hits);
     smoothScroll();
-    checkEndOfResults(totalHits);
+    checkEndOfResults(totalHits, hits.length);
   } catch (error) {
     console.error(error);
     notifyError('Something went wrong. Please try again.');
@@ -92,11 +92,13 @@ function setLoadingState(isLoading) {
   refs.loadMoreBtn.textContent = isLoading ? 'Loading...' : 'Load more';
 }
 
-function checkEndOfResults(totalHits) {
-  const currentPage = pixabayApiService.page - 1;
-  const perPage = pixabayApiService.perPage;
+function checkEndOfResults(totalHits, hitsLength) {
+  const loadedImages = refs.divGallery.children.length;
 
-  if (currentPage * perPage >= totalHits) {
+  // Pixabay API limit
+  const maxAvailable = Math.min(totalHits, 500);
+
+  if (loadedImages >= maxAvailable || hitsLength === 0) {
     refs.loadMoreBtn.classList.add('is-hidden');
     notifyInfo("We're sorry, but you've reached the end of search results.");
   } else {
