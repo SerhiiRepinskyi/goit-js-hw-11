@@ -32,22 +32,23 @@
     />
   </head>
   <body>
-    <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-        aria-label="Search images"
-      />
-      <button type="submit">Search</button>
-    </form>
+    <header>
+      <form class="search-form" id="search-form">
+        <input
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+          aria-label="Search images"
+        />
+        <button type="submit">Search</button>
+      </form>
+    </header>
 
-    <div class="gallery">
-      <!-- Картки зображень -->
-    </div>
-
-    <button type="button" class="load-more" disabled>Load more</button>
+    <main>
+      <div class="gallery"></div>
+      <button type="button" class="load-more" disabled>Load more</button>
+    </main>
 
     <script src="index.js" type="module"></script>
   </body>
