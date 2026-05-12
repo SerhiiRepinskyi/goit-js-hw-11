@@ -4,7 +4,14 @@ Interactive image search application built with vanilla JavaScript using the Pix
 
 The application allows users to search for images, load additional results with pagination, preview large images in a lightbox gallery, and receive UI notifications about search results and errors.
 
+
 ![Preview](assets/preview.webp)
+
+---
+
+## 🌐 Live Demo
+
+👉 https://SerhiiRepinskyi.github.io/pixabay-image-search
 
 ---
 
@@ -68,12 +75,6 @@ npm run build
 
 ---
 
-## 🌐 Live Demo
-
-👉 https://SerhiiRepinskyi.github.io/pixabay-image-search
-
----
-
 ## 📁 Project Structure
 
 ```plaintext
@@ -95,7 +96,8 @@ src/
 
 ## ⚙ API
 
-This project uses the public API from [Pixabay](https://pixabay.com/api/docs/?utm_source=chatgpt.com)
+This project uses the public API from
+[Pixabay](https://pixabay.com/api/docs/?utm_source=chatgpt.com)
 
 ---
 
