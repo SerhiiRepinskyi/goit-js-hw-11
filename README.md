@@ -1,99 +1,108 @@
-# Parcel template
+# 🔍 Pixabay Image Search
 
-Этот проект был создан при помощи Parcel. Для знакомства и настройки
-дополнительных возможностей [обратись к документации](https://parceljs.org/).
+Interactive image search application built with vanilla JavaScript using the Pixabay API.
 
-## Подготовка нового проекта
+The application allows users to search for images, load additional results with pagination, preview large images in a lightbox gallery, and receive UI notifications about search results and errors.
 
-1. Убедись что на компьютере установлена LTS-версия Node.js.
-   [Скачай и установи](https://nodejs.org/en/) её если необходимо.
-2. Склонируй этот репозиторий.
-3. Измени имя папки с `parcel-project-template` на имя своего проекта.
-4. Создай новый пустой репозиторий на GitHub.
-5. Открой проект в VSCode, запусти терминал и свяжи проект с GitHub-репозиторием
-   [по инструкции](https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories#changing-a-remote-repositorys-url).
-6. Установи зависимости проекта в терминале командой `npm install` .
-7. Запусти режим разработки, выполнив команду `npm start`.
-8. Перейди в браузере по адресу [http://localhost:1234](http://localhost:1234).
-   Эта страница будет автоматически перезагружаться после сохранения изменений в
-   файлах проекта.
+![Preview](assets/preview.webp)
 
-## Файлы и папки
+---
 
-- Все паршалы файлов стилей должны лежать в папке `src/sass` и импортироваться в
-  файлы стилей страниц. Например, для `index.html` файл стилей называется
-  `index.scss`.
-- Изображения добавляй в папку `src/images`. Сборщик оптимизирует их, но только
-  при деплое продакшн версии проекта. Все это происходит в облаке, чтобы не
-  нагружать твой компьютер, так как на слабых машинах это может занять много
-  времени.
+## 🚀 Features
 
-## Деплой
+- 🔎 Search images by keyword
+- 🖼 Responsive image gallery layout
+- ➕ Load more functionality with pagination
+- 🔍 Large image preview with SimpleLightbox
+- 🔔 User notifications with Notiflix
+- 📱 Responsive design for desktop, tablet, and mobile
+- ⚡ Smooth scrolling after loading new images
+- 🧠 Clean modular JavaScript architecture
 
-Для настройки деплоя проекта необходимо выполнить несколько дополнительных шагов
-по настройке твоего репозитория. Зайди во вкладку `Settings` и в подсекции
-`Actions` выбери выбери пункт `General`.
+---
 
-![GitHub actions settings](./assets/actions-config-step-1.png)
+## 🛠 Technologies Used
 
-Пролистай страницу до последней секции, в которой убедись что выбраны опции как
-на следующем изображении и нажми `Save`. Без этих настроек у сборки будет
-недостаточно прав для автоматизации процесса деплоя.
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- Parcel
+- Axios
+- Pixabay API
+- Notiflix
+- SimpleLightbox
 
-![GitHub actions settings](./assets/actions-config-step-2.png)
+---
 
-Продакшн версия проекта будет автоматически собираться и деплоиться на GitHub
-Pages, в ветку `gh-pages`, каждый раз когда обновляется ветка `main`. Например,
-после прямого пуша или принятого пул-реквеста. Для этого необходимо в файле
-`package.json` отредактировать поле `homepage` и скрипт `build`, заменив
-`your_username` и `your_repo_name` на свои, и отправить изменения на GitHub.
+## 📦 Installation
 
-```json
-"homepage": "https://your_username.github.io/your_repo_name/",
-"scripts": {
-  "build": "parcel build src/*.html --public-url /your_repo_name/"
-},
+Clone the repository:
+
+```bash
+git clone https://github.com/SerhiiRepinskyi/pixabay-image-search.git
 ```
 
-Далее необходимо зайти в настройки GitHub-репозитория (`Settings` > `Pages`) и
-выставить раздачу продакшн версии файлов из папки `/root` ветки `gh-pages`, если
-это небыло сделано автоматически.
+Navigate to the project folder:
 
-![GitHub Pages settings](./assets/repo-settings.png)
+```bash
+cd pixabay-image-search
+```
 
-### Статус деплоя
+Install dependencies:
 
-Статус деплоя крайнего коммита отображается иконкой возле его идентификатора.
+```bash
+npm install
+```
 
-- **Желтый цвет** - выполняется сборка и деплой проекта.
-- **Зеленый цвет** - деплой завершился успешно.
-- **Красный цвет** - во время линтинга, сборки или деплоя произошла ошибка.
+Start development server:
 
-Более детальную информацию о статусе можно посмотреть кликнув по иконке, и в
-выпадающем окне перейти по ссылке `Details`.
+```bash
+npm run start
+```
 
-![Deployment status](./assets/status.png)
+Build production version:
 
-### Живая страница
+```bash
+npm run build
+```
 
-Через какое-то время, обычно пару минут, живую страницу можно будет посмотреть
-по адресу указанному в отредактированном свойстве `homepage`. Например, вот
-ссылка на живую версию для этого репозитория
-[https://goitacademy.github.io/parcel-project-template](https://goitacademy.github.io/parcel-project-template).
+---
 
-Если открывается пустая страница, убедись что во вкладке `Console` нет ошибок
-связанных с неправильными путями к CSS и JS файлам проекта (**404**). Скорее
-всего у тебя неправильное значение свойства `homepage` или скрипта `build` в
-файле `package.json`.
+## 🌐 Live Demo
 
-## Как это работает
+👉 https://SerhiiRepinskyi.github.io/pixabay-image-search
 
-![How it works](./assets/how-it-works.png)
+---
 
-1. После каждого пуша в ветку `main` GitHub-репозитория, запускается специальный
-   скрипт (GitHub Action) из файла `.github/workflows/deploy.yml`.
-2. Все файлы репозитория копируются на сервер, где проект инициализируется и
-   проходит сборку перед деплоем.
-3. Если все шаги прошли успешно, собранная продакшн версия файлов проекта
-   отправляется в ветку `gh-pages`. В противном случае, в логе выполнения
-   скрипта будет указано в чем проблема.
+## 📁 Project Structure
+
+```plaintext
+src/
+│
+├── css/
+│   └── styles.css
+│
+├── js/
+│   ├── notify.js
+│   ├── pixabay-api.js
+│   └── refs.js
+│
+├── index.html
+└── index.js
+```
+
+---
+
+## ⚙ API
+
+This project uses the public API from [Pixabay](https://pixabay.com/api/docs/?utm_source=chatgpt.com)
+
+---
+
+## 👨‍💻 Author
+
+Created by **Serhii Repinskyi**
+
+- **GitHub**: [SerhiiRepinskyi](https://github.com/SerhiiRepinskyi)
+- **LinkedIn**: [Serhii Repinskyi](http://www.linkedin.com/in/serhii-repinskyi)
+
